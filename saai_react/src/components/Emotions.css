@@ -1,0 +1,38 @@
+.emotion-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 75%;
+    max-width: 80%;
+}
+
+.emotion-visual{
+    width: 50%;
+    height: auto;
+    padding: 0px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.transcript{
+    font-size: 140%;
+    width: 95%;
+    max-height: 20vh;
+    text-align: center;
+    font-weight: bold;
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.top-emotions-wrapper{
+    font-size: 150%;
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(33, 33, 33);
+    border-radius: 20px;
+    margin: 4%;
+    padding: 3%;
+}
+

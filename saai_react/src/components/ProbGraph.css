@@ -1,0 +1,12 @@
+.topN-graph-wrapper{
+    padding: 5px;
+}
+
+.topN-graph-only{
+    width: 100%; 
+    height: 30vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin: 10px 0;
+}

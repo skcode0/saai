@@ -1,0 +1,15 @@
+.button{
+    color: black;
+    background-color: rgb(131, 222, 236);
+    padding: 7px 10px;
+    display: inline-block;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: transform 200ms;
+
+}
+
+.button:hover{
+    transform: scale(1.05);
+    background-color: rgb(89, 221, 241);
+}

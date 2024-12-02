@@ -1,0 +1,39 @@
+Sentiment Analysis AI
+- People cannot see my face when I have my mask on. However, with this bot, it can do sentiment alaynsis of my voice and express emotions via screen.
+- screen will be a small extension next to my face
+
+Voice to Text --> Sentiment Analysis --> Face emoji for each sentiment
+
+
+Data train: google's goemotions (imbalanced) --> textattack (data augmentation)
+
+Model Roadmap
+Sounddevice (audio capture) + SileroVAD (voice cutoff detection) --> faster whisper/whisperx (transcription/translate) --> sentimal analysis fine-tuned BERT/ALBERTA (qlora) --> fastapi websocket --> front end sentiment graphs + appropriate face images/gifs
+
+
+Improvement:
+- use Speech Emotion Recognition (audio) along with text to detect emotions
+- add sarcasm adapter
+
+
+
+
+
+
+
+
+Steps:
+- learn react/chart.js
+- learn fastapi websocket
+- implement web
+-----------------------
+(new pc)
+- clean multiclass dataset
+- fine tune data
+- show multiclass metrics
+------------------------
+- connect llm to web
+------------------------
+- implement whisper/vad (front end)
+https://github.com/ricky0123/vad?tab=readme-ov-file
+

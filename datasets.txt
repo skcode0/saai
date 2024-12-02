@@ -1,0 +1,28 @@
+(sarcasm datasets)
+https://www.kaggle.com/datasets/rmisra/news-headlines-dataset-for-sarcasm-detection
+https://www.kaggle.com/datasets/nikhiljohnk/tweets-with-sarcasm-and-irony
+https://www.kaggle.com/datasets/sherinclaudia/sarcastic-comments-on-reddit
+https://huggingface.co/datasets/raquiba/Sarcasm_News_Headline (check if duplicate)
+
+(sentiment analysis model; look at the different datasets used for this model)
+https://huggingface.co/j-hartmann/emotion-english-distilroberta-base?text=I+feel+nothing
+
+
+
+
+voice assisstant (lesson)
+https://huggingface.co/learn/audio-course/chapter7/voice-assistant#speech-transcription
+
+wav2vec2 model (for Speech Emotion Recognition) 
+https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-english
+
+Speech Emotion Recognition dataset
+https://www.kaggle.com/datasets/dmitrybabko/speech-emotion-recognition-en
+
+
+
+
+textattack data augmentation
+https://github.com/QData/TextAttack?tab=readme-ov-file
+https://www.youtube.com/watch?v=22Q3f7Fb110&t=1410s (18:14)
+https://textattack.readthedocs.io/en/latest/2notebook/2_Constraints.html
