@@ -41,20 +41,27 @@ function App() {
   })
   // store websocket connection
   const [ws, setWs] = useState(null);
+  const [wsStatus, setWsStatus] = useState("")
 
   useEffect(() => {  
     const websocket = new WebSocket("ws://localhost:8000/ws")
 
     websocket.onopen = function() {
-      console.log("WebSocket connection established.");
+      let open_wb = "WebSocket connection established."
+      console.log(open_wb);
+      setWsStatus(open_wb);
     }
 
     websocket.onerror = function() {
-      console.error("WebSocket error!");
+      let err_wb = "WebSocket error!"
+      console.error(err_wb);
+      setWsStatus(err_wb);
     }
 
     websocket.onclose = function() {
-      console.log("WebSocket connection closed.");
+      let close_wb = "WebSocket connection closed."
+      console.log(close_wb);
+      setWsStatus(close_wb);
     };
 
     websocket.onmessage = function(event){
@@ -129,8 +136,8 @@ function App() {
   return(
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home data={data} websocket={ws}/>} />
-          <Route path="/home" element={<Home data={data} websocket={ws} />} />
+          <Route index element={<Home data={data} websocket={ws} wsStatus={wsStatus}/>} />
+          <Route path="/home" element={<Home data={data} websocket={ws} wsStatus={wsStatus}/>} />
         </Routes>
       </BrowserRouter>
   )

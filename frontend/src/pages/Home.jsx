@@ -1,11 +1,11 @@
-import Emotions from '../components/Emotions'
+import Emotions from '../components/Emotions.jsx'
 import './Home.css'
 import HomeGraph from '../components/HomeGraph.jsx'
 import VadMic from '../components/VadMic.jsx'
 import History from '../components/History.jsx'
 import React, { useState, useEffect } from 'react'
 
-function Home({data, websocket}){
+function Home({data, websocket, wsStatus}){
   const transcription = data.transcription
   const emotions = data.sentiments
 
@@ -80,7 +80,7 @@ function Home({data, websocket}){
 
   return (
     <>
-      <VadMic websocket={websocket}/>
+      <VadMic websocket={websocket} wsStatus={wsStatus}/>
       <div className="app-wrapper">
         <p className="top-emotion"
           style={{backgroundColor: `rgba(${emotions[0].rgb})`}}
