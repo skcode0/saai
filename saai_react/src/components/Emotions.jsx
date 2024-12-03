@@ -9,8 +9,7 @@ function Emotions({topEmotions, transcription}){
     const topEmotion = topEmotions[0].emotion.toLowerCase()
    
     const matchingGif = Object.entries(gifs).find(([path]) =>
-        path.includes(`${topEmotion}.gif`)
-    );
+        path.includes(`${topEmotion}.gif`));
 
     return(
         <div className="emotion-wrapper">
