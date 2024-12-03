@@ -5,6 +5,12 @@ import ProbGraph from '../components/ProbGraph.jsx'
 import './Details.css'
 import PopUp from '../components/PopUp.jsx'
 
+// TODO
+// rename this to History.jsx; put it in components folder
+// import to Home.jsx
+// show history transcriptions and corresponding buttons to expand graph
+// (don't show graph)
+
 // TODO: URGENT!!! Need to make sure details keep generating even when user's at home page. Data keeps refreshing whenever not at details page 
 function Details({emotions, transcription}){
     // TODO: later, implement loading in previous messages if requested
@@ -27,6 +33,7 @@ function Details({emotions, transcription}){
         // Prevent adding empty or unchanged messages
         if (!transcription || emotions.length === 0) return;
 
+        // TODO: need to move this. Probably need to set id on backend
         // create new message id (based on current local date/time)
         const messageId = new Date().toLocaleString()
         
@@ -107,10 +114,9 @@ function Details({emotions, transcription}){
 
     // console.log("message:", messages)
 
-    // TODO: QOL. implement auto scroll; stop auto scroll when user is not at the bottom of the page; continue auto scroll when bottom of page
-    // TODO: QOL. implement sorting options (goemotions default order, min, max, alphabetical)
     return(
         <div className="details-wrapper">
+            <VadMic />
             <div className="message-wrapper">
                 {
                     messages.map(message =>(

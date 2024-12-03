@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ProbGraph from './ProbGraph.jsx'
-import './DetailsGraphOnly.css'
+import './HomeGraph.css'
 import PopUp from './PopUp.jsx'
 
-function DetailsGraphOnly({emotions}){
+function HomeGraph({emotions}){
     // chart options
     const [chartOptions, setChartOptions] = useState(null);
 
@@ -76,11 +76,11 @@ function DetailsGraphOnly({emotions}){
         <>
             <div className="details-only-wrapper">
                 <ProbGraph emotions={emotions} chartOptions={chartOptions} limit={5}/>
-                <button className="detail-only-button" onClick={openPopUp}>Click for details</button>
+                <button className="detail-only-button" onClick={openPopUp}>Expand Graph</button>
             </div>
-            { showPopUp && <PopUp targetEmotions={emotions} closePopUp={closePopUp} chartOptions={chartOptions} />}
+            { showPopUp && <PopUp targetEmotions={emotions.filter(emotion => Math.round(emotion.probability * 100) / 100 > 0)} closePopUp={closePopUp} chartOptions={chartOptions} />}
         </>
     )
 }
 
-export default DetailsGraphOnly
+export default HomeGraph

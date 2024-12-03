@@ -4,6 +4,8 @@ import Home from './pages/Home.jsx'
 import Details from './pages/Details.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+
+// TODO: use useContext to store 100 datapoints
 function App() {
   // sorted emotions list
   const [sortedEmotions, setSortedEmotions] = useState([
@@ -38,6 +40,8 @@ function App() {
 ]);
   // transcription
   const [transcription, setTranscription] = useState("This is just a placeholder text.");
+  // id
+  const [id, setId] = useState(""); 
   // store websocket connection
   const [ws, setWs] = useState(null);
 
@@ -100,10 +104,8 @@ function App() {
       const sorted = [...colorSentiments].sort((a, b) => b.probability - a.probability);
 
       setSortedEmotions(sorted);
-
-    // ---------------------
-    // const messageData = "This is a test transcription. Need to implement logic later."
       setTranscription(sentimentData.transcription);
+      setId(sentimentData.id)
     }
 
     setWs(websocket)
@@ -125,9 +127,8 @@ function App() {
   return(
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home sortedEmotions={sortedEmotions} transcription={transcription} websocket={ws}/>} />
-          <Route path="/home" element={<Home sortedEmotions={sortedEmotions} transcription={transcription} websocket={ws}/>} />
-          {/* <Route path="/details" element={<Details emotions={sortedEmotions} transcription={transcription}/>}/> */}
+          <Route index element={<Home sortedEmotions={sortedEmotions} transcription={transcription} websocket={ws} id={id}/>} />
+          <Route path="/home" element={<Home sortedEmotions={sortedEmotions} transcription={transcription} websocket={ws} id={id}/>} />
         </Routes>
       </BrowserRouter>
   )

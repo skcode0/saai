@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from typing import Union
 from modules import transcribe_audio, analyze_sentiment
 import json
+from datetime import datetime
+
 
 app = FastAPI()
 
@@ -20,8 +22,14 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     
     try:
+        count = 0
         while True:
             data = await websocket.receive_bytes() # get wav binary from front end
+
+            # make id based on current date and time + count
+            now = datetime.now()
+            id = now.strftime("%Y%m%d_%H%M%S") + "_" + str(count)
+            count += 1
 
             # whisperx transcription 
             audio_transcription = transcribe_audio(data)
@@ -30,6 +38,7 @@ async def websocket_endpoint(websocket: WebSocket):
             sentiment_data = analyze_sentiment(audio_transcription)
 
             message = {
+                "id": id,
                 "transcription": audio_transcription,
                 "sentiments": sentiment_data
             }

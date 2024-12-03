@@ -6,6 +6,11 @@
     max-width: 80%;
 }
 
+.emotion-wrapper img{
+    width: 48%;
+    height: auto;
+}
+
 .emotion-visual{
     width: 50%;
     height: auto;

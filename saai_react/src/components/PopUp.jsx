@@ -13,7 +13,7 @@ function PopUp({targetEmotions, closePopUp, chartOptions}){
     const sentimentLabels = targetEmotions.map(data => data.emotion)
     const sentimentProbs = targetEmotions.map(data => Math.round(data.probability * 100) / 100)
 
-    // all emotions
+    // all emotions w/ prob > 0
     const allData = {
         labels: sentimentLabels,
         datasets: [
