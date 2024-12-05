@@ -1,0 +1,42 @@
+Goemotions
+
+https://www.kaggle.com/datasets/aadyasingh55/twitter-emotion-classification-dataset
+dataset name: Twitter Emotion Classification Dataset
+creator: Aadya Singh
+file name: train-00000-of-00001.parquet
+0: sadness
+1: joy
+2: love
+3: anger
+4: fear
+5: surprise
+
+
+https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data
+dataset name: Emotion Detection from Text
+creator: Pashupati Gupta
+file name: tweet_emotions.csv
+
+
+https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data
+dataset name: Emotions dataset for NLP 
+creator: praveengovi
+file name: train.txt, test.txt, val.txt
+
+
+https://www.kaggle.com/datasets/shainy/twitter-reviews-for-emotion-analysis
+dataset name: Twitter Reviews for Emotion Analysis
+creator: Shainy Merin S
+file name: data.csv
+
+https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1
+dataset name: sem_eval_2018_task_1 (English, Arabic and Spanish)
+creator: Mohammad et al. (2018)	
+file name: SemEvalWorkshop/sem_eval_2018_task_1
+
+
+
+dataset name: 
+creator: 
+file name: 
+emotions:
