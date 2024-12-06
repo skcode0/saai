@@ -1,11 +1,11 @@
 Goemotions (CLEANED AND SAVED)
 
-https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1
+https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1 (CLEANED AND SAVED)
 dataset name: sem_eval_2018_task_1 (English, Arabic and Spanish)
 creator: Mohammad et al. (2018)	
 file name: SemEvalWorkshop/sem_eval_2018_task_1
 
-https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data
+https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data 
 dataset name: Emotion Detection from Text
 creator: Pashupati Gupta
 file name: tweet_emotions.csv
