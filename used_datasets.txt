@@ -11,7 +11,7 @@ creator: Pashupati Gupta
 file name: tweet_emotions.csv
 
 
-https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data
+https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data (cleaned and saved)
 dataset name: Emotions dataset for NLP 
 creator: praveengovi
 file name: train.txt, test.txt, val.txt
