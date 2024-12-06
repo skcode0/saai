@@ -1,26 +1,33 @@
-Goemotions (CLEANED AND SAVED)
+Goemotions 
+(CLEANED AND SAVED)
 
-https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1 (CLEANED AND SAVED)
+
+
+
+https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1 
 dataset name: sem_eval_2018_task_1 (English)
 creator: Mohammad et al. (2018)	
 file name: SemEvalWorkshop/sem_eval_2018_task_1
+(CLEANED AND SAVED)
+
+
+
 
 https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data 
 dataset name: Emotion Detection from Text
 creator: Pashupati Gupta
 file name: tweet_emotions.csv
+(CLEANED AND SAVED)
 
 
-https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data (CLEANED AND SAVED)
+
+
+https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data
 dataset name: Emotions dataset for NLP 
 creator: praveengovi
 file name: train.txt, test.txt, val.txt
+(CLEANED AND SAVED)
 
-
-https://www.kaggle.com/datasets/shainy/twitter-reviews-for-emotion-analysis
-dataset name: Twitter Reviews for Emotion Analysis
-creator: Shainy Merin S
-file name: data.csv
 
 
 
