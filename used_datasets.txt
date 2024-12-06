@@ -1,7 +1,7 @@
 Goemotions (CLEANED AND SAVED)
 
 https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1 (CLEANED AND SAVED)
-dataset name: sem_eval_2018_task_1 (English, Arabic and Spanish)
+dataset name: sem_eval_2018_task_1 (English)
 creator: Mohammad et al. (2018)	
 file name: SemEvalWorkshop/sem_eval_2018_task_1
 
@@ -29,3 +29,5 @@ dataset name:
 creator: 
 file name: 
 emotions:
+
+
