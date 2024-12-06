@@ -1,4 +1,4 @@
-Goemotions (cleaned)
+Goemotions (CLEANED AND SAVED)
 
 https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1
 dataset name: sem_eval_2018_task_1 (English, Arabic and Spanish)
@@ -11,7 +11,7 @@ creator: Pashupati Gupta
 file name: tweet_emotions.csv
 
 
-https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data (cleaned and saved)
+https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data (CLEANED AND SAVED)
 dataset name: Emotions dataset for NLP 
 creator: praveengovi
 file name: train.txt, test.txt, val.txt
