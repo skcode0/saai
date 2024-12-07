@@ -16,4 +16,8 @@
 - FastApi (websocket)
 - [WhisperX](https://github.com/m-bain/whisperX)
 - Hugging Face
-- [GoEmotions](https://github.com/google-research/google-research/tree/master/goemotions)
+- Datesets
+   - [GoEmotions](https://github.com/google-research/google-research/tree/master/goemotions)
+   - [sem_eval_2018_task_1 (English)](https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1)
+   - [Emotion Detection from Text - Pashupati Gupta](https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data)
+   - [Emotions dataset for NLP - praveengovi](https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data)
