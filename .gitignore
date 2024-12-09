@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 *.wav
+
+/__pycache__
+**/cache-*.arrow
