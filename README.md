@@ -71,4 +71,4 @@ conclusion:
 - change thresholds for each emotion like this model did: https://huggingface.co/SamLowe/roberta-base-go_emotions
 - look at micro/macro/weighted avg
   - imbalanced: macro/weighted
-  
+- note: sentiments don't need to be added up to 1 because it's multi-label not multi-class
