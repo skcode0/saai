@@ -53,6 +53,7 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
 	1. original goEmotions dataset
 	2. goEmotions + other datasets
 	3. goEmotions + other datasets + textattack data augmentation
+  - testing out augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
 
 ## Result Summary
 
@@ -63,6 +64,11 @@ google result vs goemotions vs merged vs augmented
 - hyperparameter tuning (more epochs and regularization)
 - threshold for each emotion
 - datasets not too good (some labels not perfect, examples may not be of quality --> still good enough, more examples == better metrics but also hurting others...also more imbalance between subset of emotions vs others)
+
+v2 (model 3 + EDA augmentation on all labels other than neutral): improved quite a bit on minority labels, but didn't improve or hurt other label performance.
+- need to focus more on augmenting minority labels
+
+v3:
 
 conclusion: 
 - more data for each sentiment for more accurate 
