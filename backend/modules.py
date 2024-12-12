@@ -27,10 +27,13 @@ def transcribe_audio(audio_buffer):
     # {'segments': [{'text': ' This is a test 1, 2, 3, 1, 2, 3. This is a test 1, 2, 3.', 'start': 0.009, 'end': 5.776}], 'language': 'en'}
     return result['segments'][0]['text'].strip()
 
-#TODO: load in my own fine-tuned sentiment analysis model
 # sentiment analysis with fine-tuned model (Goemotions)
 def analyze_sentiment(transcription):
-    sentiment_analyzer = pipeline("sentiment-analysis", model="joeddav/distilbert-base-uncased-go-emotions-student", return_all_scores=True)
+    # test model
+    # sentiment_analyzer = pipeline("sentiment-analysis", model="joeddav/distilbert-base-uncased-go-emotions-student", return_all_scores=True)
+
+    # my own fine-tuned model
+    sentiment_analyzer = pipeline("sentiment-analysis", model="../models/augmented", return_all_scores=True)
 
     result = sentiment_analyzer(transcription)[0]
 

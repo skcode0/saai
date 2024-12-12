@@ -10,6 +10,19 @@
 6. Return transcription and corresponding sentiments to frontend
 7. Frontend displays gif of top sentiment, transcription, and graph of sentiments
 
+## Overview of how sentiment analysis models were trained
+- Datasets have been processed and cleaned
+  - datasets were converted to Hugging Face Datasets (uploaded to hugging face and saved locally)
+  - labels have been one-hot-encoded (OHE) to reflect on multilabeling (28 sentiments based on GoEmotions)
+  - Merged datasets
+  - Data augmentation (TextAttack) added to certain minority/underrepresented labels
+- 3 models (w/ class weighing to deal with imbalanced datasets) have been trained (saved locally and uploaded to Hugging Face):
+  - Model using only GoEmotions dataset (go)
+  - Model using GoEmotions and 3 other datasets (sources listed down below) (merged)
+  - Model using GoEmotions, 3 other datasets, and data augmentation (only on some minority labels) (augmented)
+- Measured performance metrics on individual sentiment labels
+Note: Even with gtx1080 FP32, training a model with around 90k examples took around 50 min.
+
 ## Tools/Resources Used:
 - React
 - Front-end VAD by [ricky0123](https://github.com/ricky0123/vad)
@@ -21,3 +34,41 @@
    - [sem_eval_2018_task_1 (English)](https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1)
    - [Emotion Detection from Text - Pashupati Gupta](https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data)
    - [Emotions dataset for NLP - praveengovi](https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data)
+- [distilroberta-base](https://huggingface.co/distilbert/distilroberta-base)
+- (TextAttack)[https://github.com/QData/TextAttack]
+
+## Personal logs
+- 11/27/24 - 11/29/24: finished basic front end
+- 11/29/24: worked on backend websocket
+- 12/1/24: implemented VAD on front end 
+- 12/2/24: implemented websocket to send audio data, which is processed by WhisperX and sentiment analysis model. Processed data sent back to front end for displaying result. Image changing based on top emotion.
+   - uploaded everything to github
+- 12/3/24: implemented short long-term memory by saving 100 most recent sentiments/graphs in a state.
+- 12/4/24: downloaded more datasets
+- 12/5/24 - 12/6/24: cleaned/processed and combined datasets
+- 12/7/24: textattack data augmentation
+- 12/8/24 - 12/10/24: learned about hugging face fine tuning
+- 12/10/24: implemented fine tuning 
+- 12/12/24: trained 3 datasets
+	1. original goEmotions dataset
+	2. goEmotions + other datasets
+	3. goEmotions + other datasets + textattack data augmentation
+
+## Result Summary
+
+TODO
+google result vs goemotions vs merged vs augmented
+- look at f1 in each emotion (class weight)
+- sample size per emotion
+- hyperparameter tuning (more epochs and regularization)
+- threshold for each emotion
+- datasets not too good (some labels not perfect, examples may not be of quality --> still good enough, more examples == better metrics but also hurting others...also more imbalance between subset of emotions vs others)
+
+conclusion: 
+- more data for each sentiment for more accurate 
+  - add data augmentation as model gets better
+- hypertuning
+- change thresholds for each emotion like this model did: https://huggingface.co/SamLowe/roberta-base-go_emotions
+- look at micro/macro/weighted avg
+  - imbalanced: macro/weighted
+  
