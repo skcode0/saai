@@ -14,6 +14,7 @@
 frontend: npm run dev
 backend (fastAPI): uvicorn main:app --reload
 Make sure to use your own model or comment out the test model in 'modules.py' in backend folder.
+If you would like to try out my models (or datasets), you can find it here: [sngkm](https://huggingface.co/sangkm)
 
 ## Overview of how sentiment analysis models were trained
 - Datasets have been processed and cleaned
@@ -21,10 +22,12 @@ Make sure to use your own model or comment out the test model in 'modules.py' in
   - labels have been one-hot-encoded (OHE) to reflect on multilabeling (28 sentiments based on GoEmotions)
   - Merged datasets
   - Data augmentation (TextAttack) added to certain minority/underrepresented labels
-- 3 models (w/ class weighing to deal with imbalanced datasets) have been trained (saved locally and uploaded to Hugging Face):
-  - Model using only GoEmotions dataset (go)
-  - Model using GoEmotions and 3 other datasets (sources listed down below) (merged)
-  - Model using GoEmotions, 3 other datasets, and data augmentation (only on some minority labels) (augmented)
+- 5 models (w/ class weighing to deal with imbalanced datasets) have been trained (saved locally and uploaded to Hugging Face):
+  - Model using only GoEmotions dataset (`go`)
+  - Model using GoEmotions and 3 other datasets (sources listed down below) (`merged`)
+  - Model using GoEmotions, 3 other datasets, and data augmentation (only on some minority labels) (`augmented (v1)`)
+  - Model using GoEmotions, 3 other datasets, and data augmentation on all labels except 'neutral'
+  - Model using GoEmotions, 3 other datasets, and data augmentation (double the augmentation on minority labels)
 - Measured performance metrics on individual sentiment labels
 Note: Even with gtx1080 FP32, training a model with around 90k examples took around 50 min.
 
@@ -34,7 +37,7 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
 - FastApi (websocket)
 - [WhisperX](https://github.com/m-bain/whisperX)
 - Hugging Face
-- Datesets
+- Datasets
    - [GoEmotions](https://github.com/google-research/google-research/tree/master/goemotions)
    - [sem_eval_2018_task_1 (English)](https://huggingface.co/datasets/SemEvalWorkshop/sem_eval_2018_task_1)
    - [Emotion Detection from Text - Pashupati Gupta](https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data)
@@ -43,28 +46,27 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
 - (TextAttack)[https://github.com/QData/TextAttack]
 
 ## Result Summary
-
-Performance comparison between different fine-tune models
+Performance comparison between different fine-tuned models
 - [Google](https://arxiv.org/pdf/2005.00547) 
   - Original research paper that trained on GoEmotions
 - [SamLowe](https://huggingface.co/SamLowe/roberta-base-go_emotions)
   - Popular GoEmotions fine-tuned model on Hugging face
   - Shows results for default threshold of 0.5 and separate thresholds for each label.
-
-
-Notes:
-- From the look it, Google's paper seems to have used threshold of 0.5. Also, it shows macro-average, which is often used for imbalanced datasets. Thus, the chart below will show comparison based on **threshold=0.5** and **macro-averages** (on test set). 
-- Some models used more test samples for evaluation (look at `Support` column)
-  - There are 5.43k examples for test set in GoEmotions, but the `Support` column shows around 6.33k. This is because it's multi-label, so each example can have multiple labels.
-  - Google's and SamLowe's models don't specifically mention how many examples were in test set, but I assume it's the same set as what I've used for my GoEmotions-only model.
-  - 17388 = test sets from GoEmotions + other datasets 
-- The following models are mine:
+- My models:
   - `go`: GoEmotions dataset only
-  - `merged`: GoEmotions + 4 other datasets (Hugging Face & Kaggle)
+  - `merged`: GoEmotions + 3 other datasets (Hugging Face & Kaggle)
   - `augmented (v1)`: merged datasets + augmented data
   - `augmented v2`: augmented v1 datasets + TextAttack's EDA on all labels other than neutral
   - `augmented v3`: augmented v1 datasets + TextAttack's EDA on non-majority labels + TextAttack's CharSwapAugmenter on minority labels
     - Creates more examples for labels with very few examples compared to other labels'
+
+Notes:
+- From the look it, Google's paper seems to have used threshold of 0.5. Also, it shows macro-averages, which are often used for imbalanced datasets. Thus, the chart below will show comparison based on **threshold=0.5** and **macro-averages** (on test sets).
+- Google's and SamLowe's models don't explicitly mention how many examples were in test set, but I assume it's the same set as what I've used for my GoEmotions-only model (`go`). 
+- Some models used more test samples for evaluation (look at `Support` column)
+  - There are 5.43k examples for test set in GoEmotions, but the `Support` column shows around 6.33k. This is because it's multi-label, so each example can have multiple labels.
+  - 17388 = test sets from GoEmotions + other datasets 
+
 
 | Models       | Precision | Recall | F1-Score | Support |
 |--------------|-----------|--------|----------|---------|
@@ -92,7 +94,7 @@ Notes:
 
 ## Conclusion
 - We can either use `augmented v2` or `augmented v3`. `V2` generalized the best out of the above-mentioned models. However, it still struggled with minority labels like 'grief'. If we want the model to at least recognize all labels, `v3` is preferred. For this project, I will be using `v2`, as grief is a sentiment that is often very specific to certain conversations.
-- Please do note the models I have trained are NOT even close to being the best sentiment analysis model. There still a lot of improvements to be had. Here are some of the things I would try to produce better results:
+- Please do note the models I have trained are NOT even close to being the best sentiment analysis model. There's still a lot of improvements to be had. Here are some of the things I would try to produce better results:
   1. Get more (quality) data, especially for minority labels
     - Not only does this help solve imbalanced dataset problem, but it also helps the model to predict more correct labels
   2. Use different data augmentation techniques to improve model performance by 1-2% (ymmv) and make your model(s) more robust
@@ -128,3 +130,4 @@ Notes:
   - augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
   - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
 - 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
+  - Make models/datasets/github publicly available. 
