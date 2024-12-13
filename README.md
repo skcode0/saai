@@ -8,7 +8,7 @@
 4. Feed .wav to [WhisperX](https://github.com/m-bain/whisperX) for transcription
 5. Use outputted transcription to a sentiment analysis model (BERT-based) that's been trained on [GoEmotions](https://github.com/google-research/google-research/tree/master/goemotions)
 6. Return transcription and corresponding sentiments to frontend
-7. Frontend displays gif of top sentiment, transcription, and graph of sentiments
+7. Frontend displays gif of top sentiment, transcription, and graph of sentiments (Note that the probabilities of the sentiments don't have to add up to 1, because it's a multi-label classification, not multi-class where you can only have one label out of all labels)
 
 ## Overview of how sentiment analysis models were trained
 - Datasets have been processed and cleaned
@@ -37,6 +37,73 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
 - [distilroberta-base](https://huggingface.co/distilbert/distilroberta-base)
 - (TextAttack)[https://github.com/QData/TextAttack]
 
+## Result Summary
+
+Performance comparison between different fine-tune models
+- [Google](https://arxiv.org/pdf/2005.00547) 
+  - Original research paper that trained on GoEmotions
+- [SamLowe](https://huggingface.co/SamLowe/roberta-base-go_emotions)
+  - Popular GoEmotions fine-tuned model on Hugging face
+  - Shows results for default threshold of 0.5 and separate thresholds for each label.
+
+
+Notes:
+- From the look it, Google's paper seems to have used threshold of 0.5. Also, it shows macro-average, which is often used for imbalanced datasets. Thus, the chart below will show comparison based on **threshold=0.5** and **macro-averages** (on test set). 
+- Some models used more test samples for evaluation (look at `Support` column)
+  - There are 5.43k examples for test set in GoEmotions, but the `Support` column shows around 6.33k. This is because it's multi-label, so each example can have multiple labels.
+  - Google's and SamLowe's models don't specifically mention how many examples were in test set, but I assume it's the same set as what I've used for my GoEmotions-only model.
+  - 17388 = test sets from GoEmotions + other datasets 
+- The following models are mine:
+  - `go`: GoEmotions dataset only
+  - `merged`: GoEmotions + 4 other datasets (Hugging Face & Kaggle)
+  - `augmented (v1)`: merged datasets + augmented data
+  - `augmented v2`: augmented v1 datasets + TextAttack's EDA on all labels other than neutral
+  - `augmented v3`: augmented v1 datasets + TextAttack's EDA on non-majority labels + TextAttack's CharSwapAugmenter on minority labels
+    - Creates more examples for labels with very few examples compared to other labels'
+
+| Models       | Precision | Recall | F1-Score | Support |
+|--------------|-----------|--------|----------|---------|
+| Google       | 0.40      | **0.63**   | 0.46     | 6329    |
+| SamLowe      | **0.575**     | 0.396  | 0.450    | 6329    |
+| go           | 0.57      | 0.41   | 0.46     | 6329    |
+| merged       | 0.57      | 0.42   | 0.46     | 17388   |
+| augmented (v1) | 0.56      | 0.44   | 0.48     | 17388   |
+| augmented v2 | 0.55      | 0.46   | **0.50**     | 17388   |
+| augmented v3 | 0.55      | 0.46   | 0.49     | 17388   |
+
+
+- My `go` model's performance is on par with Google's and SamLowe's.
+- Just adding more datasets didn't really improve the performance of the model.
+- From looking at F1, `augmented v2` model produced the highest score.
+- Often times, minority labels often give scores of 0 for precision/recall/f1 due to too few examples.
+  - Google's model fails to predict 'grief'
+  - SamLowe's and go model shows 0 for 'grief', 'pride', 'relief'
+  - Although there were more data overall, merged model failed to give performance metrics for 'grief', 'pride', and surprisingly 'nervousness'. It gave 'relief' F1 score of 0.14. The reason for this is that the datasets often added common labels like 'joy', 'love', 'sadness', 'neutral', etc. but not enough examples for the minority labels. Moreover, as you can see, the macro averages for the merged model didn't really show much improvement. It's probably due to adding examples that were not exactly of great quality. Some labels were questionable and debatable. It introduced some noise and hurt performances of some labels. For example, compared to go model, merged model gave F1 score of 0.82 for joy and 0.65 for love; go model had F1 score of 0.61 for joy and 0.83 for love. In the end, more data helped some labels while hurting others, eventually balancing out the overall score, causing the model to perform very similarly to the base model (go).
+- Data augmented models actually improved the the performance a little. 
+  - V1 increased the F1 score by 0.02 compared to the base model (go). However it still failed to give scores for 'grief' and 'pride'. It was able to give 'nervousness' F1 score of 0.25 and 0.24 for 'relief'.
+  - V2 was the best model based on macro-F1. This model still failed to give score for 'grief' but was able to give 'pride' F1 score of 0.42. 'relief' was 0.25.
+  - V3, although performed a little worse than V2, was able to give performance metrics for every label. This is thanks to more focus on having more data augmentation for minority labels. 'grief' have F1 score of 0.25, 'pride' 0.42, and 'relief' 0.17.
+
+
+## Conclusion
+- We can either use `augmented v2` or `augmented v3`. V2 generalized the best out of the above-mentioned models. However, it still struggled with minority labels like 'grief'. If we want the model to at least recognize all labels, v3 is preferred. For this project, I will be using v2 as grief is a very specific sentiment to have for conversations.
+- Please do note the models I have trained are NOT even close to being the best sentiment analysis model. There still a lot of improvements to be had. Here are some of the things I would try to produce better results:
+  1. Get more (quality) data, especially for minority labels
+    - Not only does this help solve imbalanced dataset problem, but it also helps the model to predict more correct labels
+  2. Use different data augmentation techniques to improve model performance by 1-2% (ymmv) and make your model more robust
+     - This method is especially good for minority labels.
+  3. Try different hyperparameters. I've mostly used defaults, but changing some of the hyperparameters (epochs, regularization, etc.) may product better results even with the same datasets.
+  4. Try different thresholds instead of using the default 0.5.
+      - [SamLowe](https://huggingface.co/SamLowe/roberta-base-go_emotions) shows example of how it's done.
+
+
+## Ideas for more advanced improvements
+- Add more labels
+- Sarcasm detection
+- Speech Emotion Recognition: use audio as input instead of text to detect emotions better
+- Using computer vision to detect emotions based on body languages and facial expressions.
+
+
 ## Personal logs
 - 11/27/24 - 11/29/24: finished basic front end
 - 11/29/24: worked on backend websocket
@@ -53,35 +120,6 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
 	1. original goEmotions dataset
 	2. goEmotions + other datasets
 	3. goEmotions + other datasets + textattack data augmentation
-  - testing out augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
-
-## Result Summary
-
-TODO
-google result vs goemotions vs merged vs augmented
-- look at f1 in each emotion (class weight)
-- sample size per emotion
-- hyperparameter tuning (more epochs and regularization)
-- threshold for each emotion
-- datasets not too good (some labels not perfect, examples may not be of quality --> still good enough, more examples == better metrics but also hurting others...also more imbalance between subset of emotions vs others)
-
-v2 (model 3 + EDA augmentation on all labels other than neutral): improved quite a bit on minority labels, but didn't improve or hurt other label performance.
-- need to focus more on augmenting minority labels
-
-v3:
-EasyDataAugmenter on all labels except labels with a lot of examples [neutral (27), sadness (25), joy (17), love (18), anger (2)].
-CharSwapAugmenter on labels with very few examples compared to others: relief (23), confusion (6), disappointment (9), realization (22), caring (5), excitement (13), desire (8), remorse (24), embarrassment (12), nervousness (19), pride (21), grief (16).
-
-conclusion: 
-- more data for each sentiment for more accurate 
-  - add data augmentation as model gets better
-- hypertuning
-- change thresholds for each emotion like this model did: https://huggingface.co/SamLowe/roberta-base-go_emotions
-- look at micro/macro/weighted avg
-  - imbalanced: macro/weighted
-- note: sentiments don't need to be added up to 1 because it's multi-label not multi-class
-
-- For better performance, you need a lot more examples for minority labels. Data augmentation does help, especially for minority labels, but there's still a limit.
-- After getting more examples, you should to do data augmentation as it generally gives more robust model (ymmv).
-
-In the end, chose [model name/version] because it can predict more minority variables reliably while having similar scores on all other labels.
+  - augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
+  - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
+- 12/13/24: Finished writing about result summary and conclusion
