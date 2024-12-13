@@ -13,7 +13,7 @@
 # How to start up servers
 - frontend (react): npm run dev
 - backend (fastAPI): uvicorn main:app --reload
-- Make sure to use your own model or comment out the test model in 'modules.py' in backend folder.
+- Make sure to use your own model or the test model (commented-out) in 'modules.py' in backend folder.
   - If you would like to try out my models (or datasets), you can find it here: [sngkm](https://huggingface.co/sangkm)
 
 ## Overview of how sentiment analysis models were trained
