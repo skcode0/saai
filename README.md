@@ -14,7 +14,7 @@
 - frontend (react): npm run dev
 - backend (fastAPI): uvicorn main:app --reload
 - Make sure to use your own model or the test model (commented-out) in 'modules.py' in backend folder.
-  - If you would like to try out my models (or datasets), you can find it here: [sngkm](https://huggingface.co/sangkm)
+  - If you would like to try out my models (or datasets), you can find it here: [sangkm](https://huggingface.co/sangkm)
 
 ## Overview of how sentiment analysis models were trained
 - Datasets have been processed and cleaned
@@ -26,10 +26,10 @@
   - Model using only GoEmotions dataset (`go`)
   - Model using GoEmotions and 3 other datasets (sources listed down below) (`merged`)
   - Model using GoEmotions, 3 other datasets, and data augmentation (only on some minority labels) (`augmented (v1)`)
-  - Model using GoEmotions, 3 other datasets, and data augmentation on all labels except 'neutral'
-  - Model using GoEmotions, 3 other datasets, and data augmentation (double the augmentation on minority labels)
+  - Model using GoEmotions, 3 other datasets, and data augmentation on all labels except 'neutral' (`augmented v2`)
+  - Model using GoEmotions, 3 other datasets, and data augmentation (more augmentation for minority labels) (`augmented v3`)
 - Measured performance metrics on individual sentiment labels
-Note: Even with gtx1080 FP32, training a model with around 90k examples took around 50 min.
+- Note: Even with gtx1080 FP32, training a model with around 90k examples took around 50 min.
 
 ## Tools/Resources Used:
 - React
@@ -43,7 +43,7 @@ Note: Even with gtx1080 FP32, training a model with around 90k examples took aro
    - [Emotion Detection from Text - Pashupati Gupta](https://www.kaggle.com/datasets/pashupatigupta/emotion-detection-from-text/data)
    - [Emotions dataset for NLP - praveengovi](https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp/data)
 - [distilroberta-base](https://huggingface.co/distilbert/distilroberta-base)
-- (TextAttack)[https://github.com/QData/TextAttack]
+- [TextAttack](https://github.com/QData/TextAttack)
 
 ## Result Summary
 Performance comparison between different fine-tuned models
@@ -85,9 +85,9 @@ Notes:
 - Often times, minority labels often gave scores of 0 for precision/recall/f1 due to too few examples.
   - `Google`'s model failed to predict 'grief'
   - `SamLowe`'s and `go` model gave 0 for 'grief', 'pride', 'relief'
-  - Although there were more data overall, `merged` model failed to give performance metrics for 'grief', 'pride', and surprisingly 'nervousness'. It gave 'relief' F1 score of 0.14. The reason for this is that the datasets often added common labels like 'joy', 'love', 'sadness', 'neutral', etc. but not enough examples for minority labels. Moreover, as you can see, the macro averages for the `merged` model didn't really show much improvement. It's probably due to adding examples that were not exactly of great quality. Some labels were questionable and debatable. It introduced some noise and hurt performances of some labels. For example, compared to `go` model, `merged` model gave F1 score of 0.82 for 'joy' and 0.65 for 'love'; `go` model had F1 score of 0.61 for 'joy' and 0.83 for 'love'. In the end, more data helped some labels while hurting others, eventually balancing out the overall score, causing the model to perform very similarly to the base model (`go`).
+  - Although there were more data overall, `merged` model failed to give performance metrics for 'grief', 'pride', and surprisingly 'nervousness'. It gave 'relief' F1 score of 0.14. The reason for this is that the datasets often added common labels like 'joy', 'love', 'sadness', 'neutral', etc. but not enough examples for minority labels. Moreover, as you can see, the macro averages for the `merged` model didn't really show much improvement. It's probably due to adding examples that were not exactly of great quality. Some labels were questionable and debatable. It introduced some noise and hurt performances of certain labels. For example, compared to `go` model, `merged` model gave F1 score of 0.82 for 'joy' and 0.65 for 'love'; `go` model had F1 score of 0.61 for 'joy' and 0.83 for 'love'. In the end, more data helped some labels while hurting others, eventually balancing out the overall score, causing the model to perform very similarly to the base model (`go`).
 - Data augmented models actually improved the the performance a little. 
-  - `V1` increased the F1 score by 0.02 compared to the base model (`go`). However it still failed to give scores for 'grief' and 'pride'. It was able to give 'nervousness' F1 score of 0.25 and 0.24 for 'relief'.
+  - `V1` increased the F1 score by 0.04 compared to the base model (`go`). However it still failed to give scores for 'grief' and 'pride'. It was able to give 'nervousness' F1 score of 0.25 and 0.24 for 'relief'.
   - `V2` was the best model based on macro-F1. This model still failed to give score for 'grief' but was able to give 'pride' F1 score of 0.42. 'relief' was 0.25.
   - `V3`, although performed a little worse than `V2`, was able to give performance metrics for every label. This is thanks to more focus on having more data augmentation for minority labels. 'grief' had F1 score of 0.25, 'pride' 0.42, and 'relief' 0.17.
 
@@ -97,9 +97,9 @@ Notes:
 - Please do note the models I have trained are NOT even close to being the best sentiment analysis model. There's still a lot of improvements to be had. Here are some of the things I would try to produce better results:
   1. Get more (quality) data, especially for minority labels
     - Not only does this help solve imbalanced dataset problem, but it also helps the model to predict more correct labels
-  2. Use different data augmentation techniques to improve model performance by 1-2% (ymmv) and make your model(s) more robust
+  2. Use different data augmentation techniques to improve model performance (ymmv) and make your model(s) more robust.
      - This method is especially good for minority labels as it also produces more data for those labels.
-  3. Try different hyperparameters. I've mostly used defaults, but changing some of the hyperparameters (epochs, regularization, etc.) may product better results even with the same datasets.
+  3. Try different hyperparameters. I've mostly used defaults, but changing some of the hyperparameters (epochs, regularization, etc.) may produce better results even with the same datasets.
   4. Try different thresholds instead of using the default 0.5.
       - [SamLowe](https://huggingface.co/SamLowe/roberta-base-go_emotions) shows example of how it's done.
 
@@ -127,7 +127,7 @@ Notes:
 	1. original goEmotions dataset
 	2. goEmotions + other datasets
 	3. goEmotions + other datasets + textattack data augmentation
-  - augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
+  - augmented v2 (EDA augmentation on all labels other than neutral)
   - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
 - 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
   - Made models/datasets/github publicly available. 
