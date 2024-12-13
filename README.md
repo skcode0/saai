@@ -10,6 +10,10 @@
 6. Return transcription and corresponding sentiments to frontend
 7. Frontend displays gif of top sentiment, transcription, and graph of sentiments (Note that the probabilities of the sentiments don't have to add up to 1, because it's a multi-label classification, not multi-class where you can only have one label out of all labels)
 
+# Demo
+[Demo 1]('./demo/demo1.mp4)
+[Demo 2]('./demo/demo2.mp4)
+
 # How to start up servers
 - frontend (react): npm run dev
 - backend (fastAPI): uvicorn main:app --reload
