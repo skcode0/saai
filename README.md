@@ -137,3 +137,4 @@ Notes:
   - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
 - 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
   - Made models/datasets/github publicly available. 
+  - made 2 demo vids
