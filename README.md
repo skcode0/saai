@@ -80,3 +80,8 @@ conclusion:
 - look at micro/macro/weighted avg
   - imbalanced: macro/weighted
 - note: sentiments don't need to be added up to 1 because it's multi-label not multi-class
+
+- For better performance, you need a lot more examples for minority labels. Data augmentation does help, especially for minority labels, but there's still a limit.
+- After getting more examples, you should to do data augmentation as it generally gives more robust model (ymmv).
+
+In the end, chose [model name/version] because it can predict more minority variables reliably while having similar scores on all other labels.
