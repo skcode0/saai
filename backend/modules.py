@@ -32,7 +32,7 @@ def analyze_sentiment(transcription):
     # test model
     # sentiment_analyzer = pipeline("sentiment-analysis", model="joeddav/distilbert-base-uncased-go-emotions-student", return_all_scores=True)
 
-    # my own fine-tuned model
+    # my own fine-tuned model (from local files; can also be accessed publicly via Hugging Face)
     sentiment_analyzer = pipeline("sentiment-analysis", model="../models/augmented_v2", return_all_scores=True)
 
     result = sentiment_analyzer(transcription)[0]
