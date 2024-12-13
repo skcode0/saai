@@ -75,23 +75,23 @@ Notes:
 - My `go` model's performance is on par with Google's and SamLowe's.
 - Just adding more datasets didn't really improve the performance of the model.
 - From looking at F1, `augmented v2` model produced the highest score.
-- Often times, minority labels often give scores of 0 for precision/recall/f1 due to too few examples.
-  - Google's model fails to predict 'grief'
-  - SamLowe's and go model shows 0 for 'grief', 'pride', 'relief'
-  - Although there were more data overall, merged model failed to give performance metrics for 'grief', 'pride', and surprisingly 'nervousness'. It gave 'relief' F1 score of 0.14. The reason for this is that the datasets often added common labels like 'joy', 'love', 'sadness', 'neutral', etc. but not enough examples for the minority labels. Moreover, as you can see, the macro averages for the merged model didn't really show much improvement. It's probably due to adding examples that were not exactly of great quality. Some labels were questionable and debatable. It introduced some noise and hurt performances of some labels. For example, compared to go model, merged model gave F1 score of 0.82 for joy and 0.65 for love; go model had F1 score of 0.61 for joy and 0.83 for love. In the end, more data helped some labels while hurting others, eventually balancing out the overall score, causing the model to perform very similarly to the base model (go).
+- Often times, minority labels often gave scores of 0 for precision/recall/f1 due to too few examples.
+  - `Google`'s model failed to predict 'grief'
+  - `SamLowe`'s and `go` model gave 0 for 'grief', 'pride', 'relief'
+  - Although there were more data overall, `merged` model failed to give performance metrics for 'grief', 'pride', and surprisingly 'nervousness'. It gave 'relief' F1 score of 0.14. The reason for this is that the datasets often added common labels like 'joy', 'love', 'sadness', 'neutral', etc. but not enough examples for minority labels. Moreover, as you can see, the macro averages for the `merged` model didn't really show much improvement. It's probably due to adding examples that were not exactly of great quality. Some labels were questionable and debatable. It introduced some noise and hurt performances of some labels. For example, compared to `go` model, `merged` model gave F1 score of 0.82 for 'joy' and 0.65 for 'love'; `go` model had F1 score of 0.61 for 'joy' and 0.83 for 'love'. In the end, more data helped some labels while hurting others, eventually balancing out the overall score, causing the model to perform very similarly to the base model (`go`).
 - Data augmented models actually improved the the performance a little. 
-  - V1 increased the F1 score by 0.02 compared to the base model (go). However it still failed to give scores for 'grief' and 'pride'. It was able to give 'nervousness' F1 score of 0.25 and 0.24 for 'relief'.
-  - V2 was the best model based on macro-F1. This model still failed to give score for 'grief' but was able to give 'pride' F1 score of 0.42. 'relief' was 0.25.
-  - V3, although performed a little worse than V2, was able to give performance metrics for every label. This is thanks to more focus on having more data augmentation for minority labels. 'grief' have F1 score of 0.25, 'pride' 0.42, and 'relief' 0.17.
+  - `V1` increased the F1 score by 0.02 compared to the base model (`go`). However it still failed to give scores for 'grief' and 'pride'. It was able to give 'nervousness' F1 score of 0.25 and 0.24 for 'relief'.
+  - `V2` was the best model based on macro-F1. This model still failed to give score for 'grief' but was able to give 'pride' F1 score of 0.42. 'relief' was 0.25.
+  - `V3`, although performed a little worse than `V2`, was able to give performance metrics for every label. This is thanks to more focus on having more data augmentation for minority labels. 'grief' had F1 score of 0.25, 'pride' 0.42, and 'relief' 0.17.
 
 
 ## Conclusion
-- We can either use `augmented v2` or `augmented v3`. V2 generalized the best out of the above-mentioned models. However, it still struggled with minority labels like 'grief'. If we want the model to at least recognize all labels, v3 is preferred. For this project, I will be using v2 as grief is a very specific sentiment to have for conversations.
+- We can either use `augmented v2` or `augmented v3`. `V2` generalized the best out of the above-mentioned models. However, it still struggled with minority labels like 'grief'. If we want the model to at least recognize all labels, `v3` is preferred. For this project, I will be using `v2`, as grief is a sentiment that is often very specific to certain conversations.
 - Please do note the models I have trained are NOT even close to being the best sentiment analysis model. There still a lot of improvements to be had. Here are some of the things I would try to produce better results:
   1. Get more (quality) data, especially for minority labels
     - Not only does this help solve imbalanced dataset problem, but it also helps the model to predict more correct labels
-  2. Use different data augmentation techniques to improve model performance by 1-2% (ymmv) and make your model more robust
-     - This method is especially good for minority labels.
+  2. Use different data augmentation techniques to improve model performance by 1-2% (ymmv) and make your model(s) more robust
+     - This method is especially good for minority labels as it also produces more data for those labels.
   3. Try different hyperparameters. I've mostly used defaults, but changing some of the hyperparameters (epochs, regularization, etc.) may product better results even with the same datasets.
   4. Try different thresholds instead of using the default 0.5.
       - [SamLowe](https://huggingface.co/SamLowe/roberta-base-go_emotions) shows example of how it's done.
@@ -122,4 +122,4 @@ Notes:
 	3. goEmotions + other datasets + textattack data augmentation
   - augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
   - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
-- 12/13/24: Finished writing about result summary and conclusion
+- 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
