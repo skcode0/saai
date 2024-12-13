@@ -130,4 +130,4 @@ Notes:
   - augmented v2 (model 3 + EDA augmentation on all labels other than neutral)
   - augmented v3 (EDA on non-majority labels + CharSwap on minority labels)
 - 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
-  - Make models/datasets/github publicly available. 
+  - Made models/datasets/github publicly available. 
