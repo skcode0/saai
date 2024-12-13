@@ -10,6 +10,11 @@
 6. Return transcription and corresponding sentiments to frontend
 7. Frontend displays gif of top sentiment, transcription, and graph of sentiments (Note that the probabilities of the sentiments don't have to add up to 1, because it's a multi-label classification, not multi-class where you can only have one label out of all labels)
 
+# How to start up servers
+frontend: npm run dev
+backend (fastAPI): uvicorn main:app --reload
+Make sure to use your own model or comment out the test model in 'modules.py' in backend folder.
+
 ## Overview of how sentiment analysis models were trained
 - Datasets have been processed and cleaned
   - datasets were converted to Hugging Face Datasets (uploaded to hugging face and saved locally)
