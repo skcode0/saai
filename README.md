@@ -11,8 +11,8 @@
 7. Frontend displays gif of top sentiment, transcription, and graph of sentiments (Note that the probabilities of the sentiments don't have to add up to 1, because it's a multi-label classification, not multi-class where you can only have one label out of all labels)
 
 # Demo
-[Demo 1]('./demo/demo1.mp4)
-[Demo 2]('./demo/demo2.mp4)
+https://github.com/user-attachments/assets/3653b826-a485-4022-95c5-9bbc52e63988
+https://github.com/user-attachments/assets/e31234a4-de0f-4627-9a9d-6d2e246f2db5
 
 # How to start up servers
 - frontend (react): npm run dev
