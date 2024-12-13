@@ -11,7 +11,7 @@
 7. Frontend displays gif of top sentiment, transcription, and graph of sentiments (Note that the probabilities of the sentiments don't have to add up to 1, because it's a multi-label classification, not multi-class where you can only have one label out of all labels)
 
 # How to start up servers
-- frontend: npm run dev
+- frontend (react): npm run dev
 - backend (fastAPI): uvicorn main:app --reload
 - Make sure to use your own model or comment out the test model in 'modules.py' in backend folder.
   - If you would like to try out my models (or datasets), you can find it here: [sngkm](https://huggingface.co/sangkm)
