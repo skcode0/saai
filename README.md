@@ -68,9 +68,9 @@ google result vs goemotions vs merged vs augmented
 v2 (model 3 + EDA augmentation on all labels other than neutral): improved quite a bit on minority labels, but didn't improve or hurt other label performance.
 - need to focus more on augmenting minority labels
 
-v3: Data augmentation on labels
-EasyDataAugmenter on all labels except neutral (27), sadness (25), joy (17), love (18), anger (2).
-CharSwapAugmenter on all labels relief (23), confusion (6), disappointment (9), realization (22), caring (5), excitement (13), desire (8), remorse (24), embarrassment (12), nervousness (19), pride (21), grief (16).
+v3:
+EasyDataAugmenter on all labels except labels with a lot of examples [neutral (27), sadness (25), joy (17), love (18), anger (2)].
+CharSwapAugmenter on labels with very few examples compared to others: relief (23), confusion (6), disappointment (9), realization (22), caring (5), excitement (13), desire (8), remorse (24), embarrassment (12), nervousness (19), pride (21), grief (16).
 
 conclusion: 
 - more data for each sentiment for more accurate 
