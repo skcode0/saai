@@ -17,10 +17,38 @@ https://github.com/user-attachments/assets/3653b826-a485-4022-95c5-9bbc52e63988
 https://github.com/user-attachments/assets/e31234a4-de0f-4627-9a9d-6d2e246f2db5
 
 # How to start up servers
-- frontend (react): npm run dev
-- backend (fastAPI): uvicorn main:app --reload
+(recommend running in virtual env)
+- Install python dependencies: pip install -r requirements.txt
+- frontend (react):
+  - npm install
+  - npm run dev
+- backend (fastAPI): 
+  - move into backend folder: cd backend 
+  - uvicorn main:app --reload
 - Make sure to use your own model or the test model (commented-out) in 'modules.py' in backend folder.
   - If you would like to try out my models (or datasets), you can find it here: [sangkm](https://huggingface.co/sangkm)
+
+**IMPORTANT**
+If you get this error: `TypeError: TranscriptionOptions.__new__() missing 3 required positional arguments: 'max_new_tokens', 'clip_timestamps', and 'hallucination_silence_threshold'` (required positional arugments may be less than or more than 3)
+
+Make sure to put this in `trainscribe_audio` from `modules.py` before you load whisperx:
+```python
+    # change values to your liking (these are parameters for faster-whisper)
+    # Issue mentioned: https://github.com/m-bain/whisperX/issues/721
+    # https://github.com/m-bain/whisperX/issues/444
+    options = {
+            "max_new_tokens": None,
+            "clip_timestamps": None,
+            "hallucination_silence_threshold": None,
+            "repetition_penalty": 1, 
+            "prompt_reset_on_temperature": 0.5,
+            "no_repeat_ngram_size": 0,
+            "multilingual": False,
+            "hotwords": None
+        }
+```
+And make sure to add parameter `asr_options=options` inside `whisperx.load_model()`
+
 
 ## Overview of how sentiment analysis models were trained
 - Datasets have been processed and cleaned
@@ -138,3 +166,4 @@ Notes:
 - 12/13/24: Imported augmented v2 to backend. Finished writing about result summary and conclusion
   - Made models/datasets/github publicly available. 
   - made 2 demo vids
+- 12/16/24: added requirements.txt
