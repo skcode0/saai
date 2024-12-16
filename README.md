@@ -18,12 +18,14 @@ https://github.com/user-attachments/assets/e31234a4-de0f-4627-9a9d-6d2e246f2db5
 
 # How to start up servers
 (recommend running in virtual env)
+- You must make sure you have CUDA toolkits installed in your system.
 - Install python dependencies: pip install -r requirements.txt
+  - You might get `ERROR: Could not find a version that satisfies the requirement torch==2.5.1+cu121 (from versions: 2.2.0, 2.2.1, 2.2.2, 2.3.0, 2.3.1, 2.4.0, 2.4.1, 2.5.0, 2.5.1)`. It's probably due to something like `+cu121`. If so, comment out torch, torchaudio, torchvision and install these from official PyTorch website. 
 - frontend (react):
   - npm install
   - npm run dev
 - backend (fastAPI): 
-  - move into backend folder: cd backend 
+  - move into backend folder (windows cmd): cd backend 
   - uvicorn main:app --reload
 - Make sure to use your own model or the test model (commented-out) in `modules.py` in backend folder.
   - If you would like to try out my models (or datasets), you can find it here: [sangkm](https://huggingface.co/sangkm)
