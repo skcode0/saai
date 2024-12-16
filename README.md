@@ -25,13 +25,11 @@ https://github.com/user-attachments/assets/e31234a4-de0f-4627-9a9d-6d2e246f2db5
 - backend (fastAPI): 
   - move into backend folder: cd backend 
   - uvicorn main:app --reload
-- Make sure to use your own model or the test model (commented-out) in 'modules.py' in backend folder.
+- Make sure to use your own model or the test model (commented-out) in `modules.py` in backend folder.
   - If you would like to try out my models (or datasets), you can find it here: [sangkm](https://huggingface.co/sangkm)
 
 **IMPORTANT**
-If you get this error: `TypeError: TranscriptionOptions.__new__() missing 3 required positional arguments: 'max_new_tokens', 'clip_timestamps', and 'hallucination_silence_threshold'` (required positional arugments may be less than or more than 3)
-
-Make sure to put this in `trainscribe_audio` from `modules.py` before you load whisperx:
+If you get error like this: `TypeError: TranscriptionOptions.__new__() missing 3 required positional arguments: 'max_new_tokens', 'clip_timestamps', and 'hallucination_silence_threshold'`, make sure to put the following options in `trainscribe_audio` function from `modules.py` before you load whisperx:
 ```python
     # change values to your liking (these are parameters for faster-whisper)
     # Issue mentioned: https://github.com/m-bain/whisperX/issues/721
